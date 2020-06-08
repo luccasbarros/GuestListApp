@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> Lista de convidados! </title>
+        
+    </head>
+
+    <body>
+        <div id="app">
+            <h1>Lista de Convidados</h1>
+            <ul id="lista">  
+            </ul>
+
+            <input id ="campo" type='text' placeholder="Digite o nome do convidado:" />
+            <input id ="idade" type='number' placeholder="Digite a idade do convidado:" /> 
+            <button id="botao">Cadastrar</button>
+        </div>
+
+        <div id='menores'>
+            <h1>Menores!</h1>
+            <ul id='listaMenores'>
+            </ul>
+        </div>
+
+        <script type="text/javascript">
+
+            var convidados = JSON.parse(localStorage.getItem("convidados")) || []; // String em Objeto. Se não retornar nada, começa com array vazio.
+
+            var convidadosMenores = JSON.parse(localStorage.getItem("convidadosMenores")) || [];
+
+            var elLista = document.getElementById("lista");
+            var elCampo = document.getElementById("campo");
+            var elIdade = document.getElementById("idade");
+            var elBotao = document.getElementById("botao");
+            var elListaMenores = document.getElementById("listaMenores")
+            
+
+            elBotao.onclick = function() {
+                var nome = elCampo.value;  // Variável que captura o valor digitado no campo.
+                var idade = elIdade.value;
+                convidados.push({nome: nome, idade: idade});  // Adiciona a variável nome captada ao array convidados.
+                convidadosMenores.push({nome: nome, idade: idade});
+                elCampo.value="";
+                elIdade.value="";
+               
+
+                salvarConvidados();
+                listarConvidados(); // processo de listagem novamente. realiza a renderização com o novo dado.
+             // botão que adiciona os convidados (executa a função)
+                salvarConvidadosMenores();
+                listarConvidadosMenores();
+            };
+            function salvarConvidados() {
+                localStorage.setItem("convidados", JSON.stringify(convidados) || []); // JSON - Transforma Objeto em String // Armazena os dados.
+            }
+
+            function salvarConvidadosMenores() {
+                localStorage.setItem("convidadosMenores", JSON.stringify(convidadosMenores) || []); // JSON - Transforma Objeto em String // Armazena os dados.
+            }
+                     
+            function listarConvidados() {
+                elLista.innerHTML = ""; // limpar a lista quando cadastra um nome.
+
+                for (const convidado of convidados) {
+                    var elConvidado = document.createElement('li');  // Cria um elemento <li>
+                    var elNome = document.createTextNode(convidado.nome + ' - ');
+                    var elIdadeTexto = document.createTextNode(convidado.idade + ' anos')  // Cria um texto com a propriedade nome.
+
+
+                    var elExcluir = document.createElement("a"); 
+                    elExcluir.setAttribute("href", "#"); // Atribuindo um link
+                    elExcluir.onclick = function() {
+                        convidados = convidados.filter(function(item) { // Varrer todos os elementos
+                            return item.nome != convidado.nome; // Retornar todos os elementos menos este elemento.
+                        });
+
+                        salvarConvidados();
+                        listarConvidados(); // Renderiza novamente os convidados atuais.
+                    };
+
+                    var elExcluirTexto = document.createTextNode(' Excluir');
+
+                    
+                    elExcluir.appendChild(elExcluirTexto);
+                    elConvidado.appendChild(elNome); // Atribui ao convidado o texto com a propriedade.
+                    elConvidado.appendChild(elIdadeTexto)
+                    elConvidado.appendChild(elExcluir);
+                    elLista.appendChild(elConvidado);  // Atribui o novo convidado a lista.
+
+                };
+            };
+
+
+            listarConvidados(); // ativa a função renderizando a lista
+            //listarConvidadosMenores();
+
+            function listarConvidadosMenores() {
+
+                elListaMenores.innerHTML="";
+
+                for (const menores of convidadosMenores) {
+
+                    if (menores.idade < 18) {
+
+                        var convidadoMenor = document.createElement('li');
+                        var nomeMenor = document.createTextNode(menores.nome + ' - ');
+                        var idadeMenor = document.createTextNode(menores.idade + ' anos');
+
+                        var excluirMenores = document.createElement("a");
+                        excluirMenores.setAttribute("href", "#");
+                        excluirMenores.onclick = function() {
+                            convidadosMenores = convidadosMenores.filter(function(item) {
+                                return item.nome != menores.nome;
+                            });
+
+                            salvarConvidadosMenores();
+                            listarConvidadosMenores();
+                        }
+
+                        var excluirMenoresTexto = document.createTextNode(' Excluir')
+
+                        excluirMenores.appendChild(excluirMenoresTexto);
+                        convidadoMenor.appendChild(nomeMenor);
+                        convidadoMenor.appendChild(idadeMenor);
+                        convidadoMenor.appendChild(excluirMenores);
+                        elListaMenores.appendChild(convidadoMenor);
+
+        
+
+                    }
+
+
+
+                }
+
+            }
+
+            listarConvidadosMenores();
+
+            
+            
+        </script>
+    
+    </body>
+
+</html>
