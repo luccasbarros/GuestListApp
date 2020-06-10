@@ -35,7 +35,7 @@
             var elListaMenores = document.getElementById("listaMenores")
             
 
-            elBotao.onclick = function() {
+            elBotao.onclick = () => {
                 var nome = elCampo.value;  // Variável que captura o valor digitado no campo.
                 var idade = elIdade.value;
                 convidados.push({nome: nome, idade: idade});  // Adiciona a variável nome captada ao array convidados.
@@ -69,8 +69,8 @@
 
                     var elExcluir = document.createElement("a"); 
                     elExcluir.setAttribute("href", "#"); // Atribuindo um link
-                    elExcluir.onclick = function() {
-                        convidados = convidados.filter(function(item) { // Varrer todos os elementos
+                    elExcluir.onclick = () => {
+                        convidados = convidados.filter((item) => { // Varrer todos os elementos
                             return item.nome != convidado.nome; // Retornar todos os elementos menos este elemento.
                         });
 
@@ -108,8 +108,8 @@
 
                         var excluirMenores = document.createElement("a");
                         excluirMenores.setAttribute("href", "#");
-                        excluirMenores.onclick = function() {
-                            convidadosMenores = convidadosMenores.filter(function(item) {
+                        excluirMenores.onclick = () => {
+                            convidadosMenores = convidadosMenores.filter((item) => {
                                 return item.nome != menores.nome;
                             });
 
