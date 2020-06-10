@@ -38,10 +38,16 @@
             elBotao.onclick = () => {
                 var nome = elCampo.value;  // Variável que captura o valor digitado no campo.
                 var idade = elIdade.value;
-                convidados.push({nome: nome, idade: idade});  // Adiciona a variável nome captada ao array convidados.
-                convidadosMenores.push({nome: nome, idade: idade});
+                  // Adiciona a variável nome captada ao array convidados.
+                
                 elCampo.value="";
                 elIdade.value="";
+                
+                if (idade < 18) {
+                    convidadosMenores.push({nome: nome, idade: idade});
+                } else {
+                    convidados.push({nome: nome, idade: idade});
+                }
                
 
                 salvarConvidados();
