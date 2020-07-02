@@ -12,7 +12,7 @@ The Guest List APP was developed to study Javascript. It's a simple web app!
 
 ### Functionalities
 You can create a guest list to a party or something similar, and it separate the guests in two type guests: under-aged and over 18.
-If the guest is under-aged, the app move the guest to "forbidden guest" list. Then, the guest control becomes a facilitator.
+If the guest is under-aged, the app move the guest to "forbidden guest" list. Then, the guest control becomes easier.
 
 ### Installation
 * 1.You can clone this repository to get the code and start with the index.html
